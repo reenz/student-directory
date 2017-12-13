@@ -19,10 +19,11 @@ def print_header
 end
 
 def print(names)
-  names.each do |name|
-    if name[:name].length <= 12
-      puts name[:name]
-    end
+  i = 0
+  while i < names.count do
+    name = names[i]
+    puts "#{name[:name]} , #{name[:cohort]} cohort"
+    i += 1
   end
 end
 
