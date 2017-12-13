@@ -19,8 +19,12 @@ puts "-------------"
 end
 
 def print(names)
-  names.each_with_index do |name, index|
-    puts "#{index + 1}. #{name[:name]} (#{name[:cohort]} cohort)"
+  puts "enter the letter to print the students with that specific letter"
+  input = gets.chomp
+  names.each do |name|
+    if name[:name].chr == input
+      puts name[:name]
+    end
   end
 end
 
