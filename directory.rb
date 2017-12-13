@@ -14,22 +14,20 @@ def input_students
 end
 
 def print_header
-puts "The students of Villains Academy"
-puts "-------------"
+  puts "The students of Villains Academy"
+  puts "-------------"
 end
 
 def print(names)
-  puts "enter the letter to print the students with that specific letter"
-  input = gets.chomp
   names.each do |name|
-    if name[:name].chr == input
+    if name[:name].length <= 12
       puts name[:name]
     end
   end
 end
 
 def print_footer(names)
-puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great students"
 end
 
 students = input_students
