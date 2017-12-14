@@ -1,8 +1,4 @@
-=begin
-In the input_students method the cohort value is hard-coded. How can you ask for both the name and the cohort?
-What if one of the values is empty? Can you supply a default value?
-The input will be given to you as a string? How will you convert it to a symbol? What if the user makes a typo?
-=end
+#print them grouped by cohorts. 
 
 def input_students
   students = []
@@ -44,6 +40,18 @@ def print(names)
   end
 end
 
+def print_by_cohort(names)
+  cohort_hash = {}
+  names.each do |name|
+    cohort = name[:cohort]
+    if cohort_hash[cohort] == nil
+      cohort_hash[cohort] = []
+    end
+    cohort_hash[cohort].push(name[:name])
+  end
+  puts cohort_hash.flatten
+end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
@@ -54,10 +62,11 @@ def print_footer(names)
     puts "Overall, we have #{names.count} great student"
   else
   puts "Overall, we have #{names.count} great students"
-end 
+end
 end
 
 students = input_students
 print_header
 print(students)
+print_by_cohort(students)
 print_footer(students)
