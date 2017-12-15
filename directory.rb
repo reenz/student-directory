@@ -1,4 +1,5 @@
 @students = []
+
 def input_students
   puts "Please enter the names of students"
   puts "To finish , just hit return twice"
@@ -26,29 +27,32 @@ def show_students
 end
 
 def save_students
-  file = File.open("students.csv" , "w")
+  puts "Enter the filename in CSV format to save data into"
+  filename = STDIN.gets.chomp
+  file = File.open(filename , "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  puts "Saved #{@students.count} students into #{filename}"
 end
 
 def load_students(filename = "students.csv")
+  puts "Enter the filename in CSV format to load data from "
+  filename = STDIN.gets.chomp
   file = File.open(filename,"r")
   file.readlines.each do |line|
     name ,cohort = line.chomp.split(',')
     @students << {name: name , cohort: cohort.to_sym}
   end
   file.close
+  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 def try_load_students
-  #filename = ARGV.first
-   if ARGV.first.nil?
-     filename = "students.csv"
-   end
+  filename = ARGV.first
    return if filename.nil?
    if File.exists?(filename)
     load_students(filename)
