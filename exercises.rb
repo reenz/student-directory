@@ -1,72 +1,50 @@
-#print them grouped by cohorts. 
-
+#print students center alligned,use chop,take inputs like country,hobbies,height
 def input_students
   students = []
-  cohorts = ["january","february","march","april","may","june","july","august",
-  "september","october","november","december"]
+
 
   while true do
-
     puts "Please enter the names of students"
     puts "To finish , just hit return twice"
-    name = gets.chomp
-
-    puts "Please enter the names of cohort"
-    puts "To finish , just hit return twice"
-    cohort = gets.chomp
-    if (cohort.empty?)
-      cohort = "default november"
-    elsif (cohorts.include?(cohort) != true)
-      puts "incorrect cohort"
-      break
-    end
+    name = gets.chop
     break if (name.empty?)
-    students << {name: name , cohort: (cohort.to_sym)}
-    if students.count == 1
-      puts "Now we have 1 student"
-    else
+
+    puts "Enter cohort"
+    cohort = gets.chop
+
+    puts "Enter country of birth"
+    country = gets.chop
+
+    puts "Enter hobbies"
+    hobbies = gets.chop
+
+    puts "Enter height"
+    height = gets.chop
+
+    students << {name: name , cohort: cohort , country: country, hobbies: hobbies ,
+    height: height}
     puts "Now we have #{students.count} students"
-  end
-end
-students
-end
 
-def print(names)
-  i = 0
-  while i < names.count do
-    name = names[i]
-    puts "#{name[:name]} , #{name[:cohort]} cohort"
-    i += 1
   end
-end
-
-def print_by_cohort(names)
-  cohort_hash = {}
-  names.each do |name|
-    cohort = name[:cohort]
-    if cohort_hash[cohort] == nil
-      cohort_hash[cohort] = []
-    end
-    cohort_hash[cohort].push(name[:name])
-  end
-  puts cohort_hash.flatten
+  students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+puts "The students of Villains Academy".center(40)
+puts "-------------".center(40)
+end
+
+def print(names)
+  names.each do |student|
+    puts "#{student[:name]}, #{student[:cohort]},#{student[:country]}, (#{student[:hobbies]}),#{student[:height]}".center(40)
+  end
 end
 
 def print_footer(names)
-  if names.count == 1
-    puts "Overall, we have #{names.count} great student"
-  else
-  puts "Overall, we have #{names.count} great students"
-end
+puts "Overall, we have #{names.count} great students".center(40)
 end
 
 students = input_students
 print_header
 print(students)
-print_by_cohort(students)
 print_footer(students)
