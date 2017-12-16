@@ -15,8 +15,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list"
+  puts "4. Load the list"
   puts "9. Exit"
 end
 
@@ -29,26 +29,26 @@ end
 def save_students
   puts "Enter the filename in CSV format to save data into"
   filename = STDIN.gets.chomp
-  file = File.open(filename , "w")
+  File.open(filename , "w") do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  file.close
   puts "Saved #{@students.count} students into #{filename}"
+end
 end
 
 def load_students(filename = "students.csv")
   puts "Enter the filename in CSV format to load data from "
   filename = STDIN.gets.chomp
-  file = File.open(filename,"r")
+  File.open(filename,"r") do |file|
   file.readlines.each do |line|
     name ,cohort = line.chomp.split(',')
     @students << {name: name , cohort: cohort.to_sym}
   end
-  file.close
-  puts "Loaded #{@students.count} students from #{filename}"
+  puts "Loading #{@students.count} students from #{filename}"
+end
 end
 
 def try_load_students
