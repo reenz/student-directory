@@ -6,11 +6,25 @@ def input_students
   name = STDIN.gets.chomp
 
   while !name.empty? do
-    @students << {name: name , cohort: :november}
+    add_student(name)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
 end
+
+def load_students(filename = "students.csv")
+  File.open(filename,"r") do |file|
+  file.readlines.each do |line|
+    name ,cohort = line.chomp.split(',')
+    add_student(name)
+    end
+  end
+end
+
+def add_student(name)
+    @students << {name: name, cohort: :november}
+end
+
 
 def print_menu
   puts "1. Input the students"
@@ -27,28 +41,13 @@ def show_students
 end
 
 def save_students
-  puts "Enter the filename in CSV format to save data into"
-  filename = STDIN.gets.chomp
-  File.open(filename , "w") do |file|
+  File.open("students.csv" , "w") do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
+    end
   end
-  puts "Saved #{@students.count} students into #{filename}"
-end
-end
-
-def load_students(filename = "students.csv")
-  puts "Enter the filename in CSV format to load data from "
-  filename = STDIN.gets.chomp
-  File.open(filename,"r") do |file|
-  file.readlines.each do |line|
-    name ,cohort = line.chomp.split(',')
-    @students << {name: name , cohort: cohort.to_sym}
-  end
-  puts "Loading #{@students.count} students from #{filename}"
-end
 end
 
 def try_load_students
