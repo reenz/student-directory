@@ -1,4 +1,5 @@
 @students = []
+require "csv"
 
 def input_students
   puts "Please enter the names of students"
@@ -9,15 +10,6 @@ def input_students
     add_student(name)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
-  end
-end
-
-def load_students(filename = "students.csv")
-  File.open(filename,"r") do |file|
-  file.readlines.each do |line|
-    name ,cohort = line.chomp.split(',')
-    add_student(name)
-    end
   end
 end
 
@@ -41,12 +33,17 @@ def show_students
 end
 
 def save_students
-  File.open("students.csv" , "w") do |file|
+  CSV.open("students.csv" , "w") do |file|
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    file << [student[:name], student[:cohort]]
     end
+  end
+end
+
+def load_students(filename = "students.csv")
+  CSV.foreach(filename,"r") do |line|
+    name ,cohort = line.join(',')
+    add_student(name)
   end
 end
 
